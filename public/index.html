@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alpha Square Restaurant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-orange-50 to-red-50 min-h-screen flex items-center justify-center p-4">
+  <div class="max-w-4xl w-full">
+    
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <div class="text-6xl mb-4">🍽️</div>
+      <h1 class="text-5xl font-bold text-gray-800 mb-2">Alpha Square</h1>
+      <p class="text-xl text-gray-600">Digital Restaurant System</p>
+    </div>
+
+    <!-- Main Options -->
+    <div class="grid md:grid-cols-2 gap-8">
+      
+      <!-- Customer QR Code -->
+      <a 
+        href="qr-display.html" 
+        target="_blank"
+        class="bg-white rounded-2xl shadow-2xl p-8 text-center hover:shadow-3xl transition transform hover:scale-105 group"
+      >
+        <div class="text-6xl mb-6 group-hover:scale-110 transition">📱</div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Customer QR Code</h2>
+        <p class="text-gray-600 mb-6">Display permanent QR code for customers to scan and order</p>
+        <div class="bg-orange-500 group-hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-bold inline-block transition">
+          Open QR Display →
+        </div>
+      </a>
+
+      <!-- Admin Panel -->
+      <div class="bg-white rounded-2xl shadow-2xl p-8 text-center">
+        <div class="text-6xl mb-6">👨‍💼</div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Admin Panel</h2>
+        <p class="text-gray-600 mb-6">Manage orders and update status</p>
+        
+        <form onsubmit="return handleLogin(event)" class="space-y-4">
+          <input 
+            type="password" 
+            id="password" 
+            placeholder="Enter password" 
+            class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:outline-none"
+          >
+          <button 
+            type="submit" 
+            class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl transition"
+          >
+            🔐 Login
+          </button>
+          <p class="text-sm text-gray-500">Password: admin123</p>
+        </form>
+      </div>
+      
+    </div>
+
+    <!-- Quick Info -->
+    <div class="mt-8 bg-white rounded-xl shadow-lg p-6">
+      <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">How It Works</h3>
+      <div class="grid md:grid-cols-3 gap-4 text-center text-sm">
+        <div class="p-4 bg-orange-50 rounded-lg">
+          <div class="text-3xl mb-2">👥</div>
+          <p class="font-semibold">For Customers</p>
+          <p class="text-gray-600">Open QR Display on screen → Customers scan → Select table → Order</p>
+        </div>
+        <div class="p-4 bg-blue-50 rounded-lg">
+          <div class="text-3xl mb-2">📋</div>
+          <p class="font-semibold">For Admin</p>
+          <p class="text-gray-600">Login to admin panel → View orders → Update status → Manage orders</p>
+        </div>
+        <div class="p-4 bg-green-50 rounded-lg">
+          <div class="text-3xl mb-2">⚡</div>
+          <p class="font-semibold">Real-Time</p>
+          <p class="text-gray-600">Orders sync instantly → Customers get live status updates</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function handleLogin(e) {
+      e.preventDefault();
+      const password = document.getElementById('password').value;
+      if (password === 'admin123') {
+        window.location.href = 'admin.html';
+      } else {
+        alert('❌ Invalid password! Try: admin123');
+      }
+      return false;
+    }
+  </script>
+</body>
+</html>

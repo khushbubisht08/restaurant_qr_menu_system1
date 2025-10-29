@@ -1,0 +1,751 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan to Order - Alpha Square</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 50%, #c44569 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      overflow-y: auto; /* FIXED: Allow scrolling */
+    }
+
+    .container {
+      text-align: center;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .logo {
+      font-size: 100px;
+      margin-bottom: 20px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+
+    h1 {
+      font-size: 64px;
+      color: white;
+      text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .subtitle {
+      font-size: 32px;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 40px;
+    }
+
+    .qr-box {
+      background: white;
+      padding: 30px;
+      border-radius: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      display: inline-block;
+      margin-bottom: 30px;
+      animation: pulse 2s ease-in-out infinite;
+      max-width: 90%;
+    }
+
+    @keyframes pulse {
+      0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      }
+      50% { 
+        transform: scale(1.02);
+        box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+      }
+    }
+
+    #qrcode {
+      width: 100%;
+      max-width: 450px;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    #qrcode img {
+      width: 100% !important;
+      height: auto !important;
+      display: block;
+    }
+
+    #qrcode canvas {
+      width: 100% !important;
+      height: auto !important;
+      display: block;
+    }
+
+    .instructions {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      padding: 30px 20px;
+      border-radius: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .instruction-title {
+      font-size: 32px;
+      color: white;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .step {
+      color: white;
+      padding: 10px;
+    }
+
+    .step-number {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    .step-text {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .loading {
+      color: white;
+      font-size: 24px;
+      padding: 40px;
+    }
+
+    .error {
+      color: #ffeb3b;
+      background: rgba(0,0,0,0.3);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .url-display {
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
+      margin: 20px auto;
+      word-break: break-all;
+      max-width: 90%;
+      padding: 15px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
+    }
+
+    .footer-note {
+      color: rgba(255,255,255,0.7);
+      font-size: 18px;
+      margin-top: 30px;
+      padding: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 42px;
+      }
+      .subtitle {
+        font-size: 24px;
+      }
+      .logo {
+        font-size: 80px;
+      }
+      .instruction-title {
+        font-size: 24px;
+      }
+      .step-text {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    
+    <!-- Restaurant Logo & Name -->
+    <!-- <div class="logo">🍽️</div>
+    <h1>Alpha Square</h1>
+    <div class="subtitle">Restaurant</div>
+
+    <!-- Loading Message 
+    <div id="loading" class="loading">
+      <div style="font-size: 48px; margin-bottom: 20px;">⏳</div>
+      Generating QR Code...
+    </div>
+
+    <!-- QR Code Container 
+    <div id="qrContainer" style="display: none;">
+      <div class="qr-box">
+        <div id="qrcode"></div>
+      </div>
+
+      <div class="url-display" id="urlDisplay"></div>
+
+      <!-- Instructions 
+      <div class="instructions">
+        <div class="instruction-title">📱 How to Order</div>
+        
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1️⃣</div>
+            <div class="step-text">Open Camera</div>
+            <p style="font-size: 14px; margin-top: 5px; opacity: 0.9;">Use your phone's camera app</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2️⃣</div>
+            <div class="step-text">Scan QR Code</div>
+            <p style="font-size: 14px; margin-top: 5px; opacity: 0.9;">Point at the QR code above</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3️⃣</div>
+            <div class="step-text">Select Table</div>
+            <p style="font-size: 14px; margin-top: 5px; opacity: 0.9;">Choose your table number</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4️⃣</div>
+            <div class="step-text">Order Food</div>
+            <p style="font-size: 14px; margin-top: 5px; opacity: 0.9;">Browse menu and place order</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        <strong>📲 Point your phone camera at the QR code</strong><br>
+        No app download required!
+      </div>
+    </div>
+
+    <!-- Error Message 
+    <div id="error" style="display: none;" class="error"></div>
+
+  </div>
+
+  <!-- Load QR Code Library from CDN 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <script>
+    // Wait for page to fully load
+    window.addEventListener('load', function() {
+      console.log('Page loaded, generating QR code...');
+      
+      // Small delay to ensure everything is ready
+      setTimeout(generateQR, 500);
+    });
+
+    function generateQR() {
+      try {
+        // Get current URL
+        const protocol = window.location.protocol; // http or https
+        const host = window.location.host; // localhost:3000 or IP:3000
+        const url = `${protocol}//${host}/table-select.html`;
+        
+        console.log('Generating QR for URL:', url);
+
+        // Clear any existing QR code
+        document.getElementById('qrcode').innerHTML = '';
+
+        // Generate QR Code
+        new QRCode(document.getElementById('qrcode'), {
+          text: url,
+          width: 450,
+          height: 450,
+          colorDark: '#000000',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Show URL
+        document.getElementById('urlDisplay').textContent = 'QR URL: ' + url;
+
+        // Hide loading, show QR
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('qrContainer').style.display = 'block';
+
+        console.log('QR code generated successfully!');
+
+      } catch (error) {
+        console.error('Error generating QR code:', error);
+        
+        // Show error message
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('error').innerHTML = `
+          <strong>⚠️ Error Loading QR Code</strong><br>
+          ${error.message}<br>
+          <small>Please refresh the page (F5) or check console for details.</small>
+        `;
+      }
+    }
+  </script>
+
+</body>
+</html>  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan to Order - Alpha Square</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1e1111ac 0%, #260509ac 50%, #170108b2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      overflow-y: auto;
+    }
+
+    .container {
+      text-align: center;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .logo {
+      font-size: 100px;
+      margin-bottom: 20px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+
+    h1 {
+      font-size: 64px;
+      color: white;
+      text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .subtitle {
+      font-size: 32px;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 40px;
+    }
+
+    /* IP Configuration Box */
+    .ip-config {
+      background: rgba(255,255,255,0.95);
+      padding: 25px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .ip-config h3 {
+      color: #c44569;
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+
+    .ip-input-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .ip-input-group input {
+      padding: 12px 20px;
+      font-size: 18px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      width: 250px;
+      text-align: center;
+    }
+
+    .ip-input-group button {
+      padding: 12px 30px;
+      font-size: 18px;
+      background: #c44569;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .ip-input-group button:hover {
+      background: #1f020a;
+      transform: translateY(-2px);
+    }
+
+    .ip-help {
+      margin-top: 15px;
+      padding: 10px;
+      background: #fff3cd;
+      border-radius: 8px;
+      color: #856404;
+      font-size: 14px;
+    }
+
+    .qr-box {
+      background: white;
+      padding: 30px;
+      border-radius: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      display: inline-block;
+      margin-bottom: 30px;
+      animation: pulse 2s ease-in-out infinite;
+      max-width: 90%;
+    }
+
+    @keyframes pulse {
+      0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      }
+      50% { 
+        transform: scale(1.02);
+        box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+      }
+    }
+
+    #qrcode {
+      width: 100%;
+      max-width: 450px;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    #qrcode img {
+      width: 100% !important;
+      height: auto !important;
+      display: block;
+    }
+
+    #qrcode canvas {
+      width: 100% !important;
+      height: auto !important;
+      display: block;
+    }
+
+    .instructions {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      padding: 30px 20px;
+      border-radius: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .instruction-title {
+      font-size: 32px;
+      color: rgb(62, 41, 41);
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .step {
+      color: rgb(51, 28, 28);
+      padding: 10px;
+    }
+
+    .step-number {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    .step-text {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .loading {
+      color: white;
+      font-size: 24px;
+      padding: 40px;
+    }
+
+    .error {
+      color: #ffeb3b;
+      background: rgba(0,0,0,0.3);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .url-display {
+      color: rgba(255,255,255,0.8);
+      font-size: 16px;
+      margin: 20px auto;
+      word-break: break-all;
+      max-width: 90%;
+      padding: 15px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .footer-note {
+      color: rgba(57, 38, 38, 0.7);
+      font-size: 18px;
+      margin-top: 30px;
+      padding: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 { font-size: 42px; }
+      .subtitle { font-size: 24px; }
+      .logo { font-size: 80px; }
+      .instruction-title { font-size: 24px; }
+      .step-text { font-size: 16px; }
+      .ip-input-group { flex-direction: column; }
+      .ip-input-group input { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    
+    <!-- Restaurant Logo & Name -->
+    <div class="logo">🍽️</div>
+    <h1>Alpha Square</h1>
+    <div class="subtitle">Restaurant</div>
+
+    <!-- IP Configuration Box -->
+    <div class="ip-config">
+      <h3>⚙️ Server Configuration</h3>
+      <div class="ip-input-group">
+        <label style="font-weight: bold; color: #666;">Your Computer IP:</label>
+        <input 
+          type="text" 
+          id="serverIP" 
+          placeholder="e.g., 192.168.1.100"
+          value=""
+        >
+        <button onclick="generateQR()">🔄 Generate QR</button>
+      </div>
+      <div class="instructions">
+        <div class="instruction-title">📱 How to Order</div>
+        
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1️⃣</div>
+            <div class="step-text">Open Camera</div>
+            <p style="font-size: 14px; margin-top: 5px; opacity: 0.9;">Use your phone's camera app</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2️⃣</div>
+            <div class="step-text">Scan QR Code</div>
+            <p style="font-size: 14px; margin-top: 5px; opacity: 0.9;">Point at the QR code above</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3️⃣</div>
+            <div class="step-text">Select Table</div>
+            <p style="font-size: 14px; margin-top: 5px; opacity: 0.9;">Choose your table number</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4️⃣</div>
+            <div class="step-text">Order Food</div>
+            <p style="font-size: 14px; margin-top: 5px; opacity: 0.9;">Browse menu and place order</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        <strong>📲 Point your phone camera at the QR code</strong><br>
+        No app download required!
+      </div>
+    </div>
+
+    <!-- Loading Message -->
+    <div id="loading" class="loading" style="display: none;">
+      <div style="font-size: 48px; margin-bottom: 20px;">⏳</div>
+      Generating QR Code...
+    </div>
+
+    <!-- QR Code Container -->
+    <div id="qrContainer" style="display: none;">
+      <div class="qr-box">
+        <div id="qrcode"></div>
+      </div>
+
+      <div class="url-display" id="urlDisplay"></div>
+
+      <!-- Instructions -->
+      <div class="instructions">
+        <div class="instruction-title">📱 How to Order</div>
+        
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1️⃣</div>
+            <div class="step-text">Open Camera</div>
+            <p style="font-size: 14px; margin-top: 5px; opacity: 0.9;">Use your phone's camera app</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2️⃣</div>
+            <div class="step-text">Scan QR Code</div>
+            <p style="font-size: 14px; margin-top: 5px; opacity: 0.9;">Point at the QR code above</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3️⃣</div>
+            <div class="step-text">Select Table</div>
+            <p style="font-size: 14px; margin-top: 5px; opacity: 0.9;">Choose your table number</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4️⃣</div>
+            <div class="step-text">Order Food</div>
+            <p style="font-size: 14px; margin-top: 5px; opacity: 0.9;">Browse menu and place order</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        <strong>📲 Customers: Point your phone camera at the QR code</strong><br>
+        No app download required!
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div id="error" style="display: none;" class="error"></div>
+
+  </div>
+
+  <!-- Load QR Code Library from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <script>
+    // Try to auto-detect IP from current URL
+    window.addEventListener('load', function() {
+      const currentHost = window.location.host;
+      
+      // If not localhost, auto-fill the IP
+      if (!currentHost.includes('localhost') && !currentHost.includes('127.0.0.1')) {
+        const ip = currentHost.split(':')[0]; // Get IP without port
+        document.getElementById('serverIP').value = ip;
+        
+        // Auto-generate QR
+        setTimeout(generateQR, 500);
+      } else {
+        // Show message for localhost users
+        document.getElementById('serverIP').placeholder = "Enter your computer's IP address";
+      }
+    });
+
+    function generateQR() {
+      const serverIP = document.getElementById('serverIP').value.trim();
+      
+      if (!serverIP) {
+        alert('⚠️ Please enter your computer IP address!\n\nWindows: CMD → ipconfig\nMac: System Preferences → Network');
+        return;
+      }
+
+      // Validate IP format
+      const ipPattern = /^(\d{1,3}\.){3}\d{1,3}$/;
+      if (!ipPattern.test(serverIP)) {
+        alert('⚠️ Invalid IP address format!\n\nExample: 192.168.1.100');
+        return;
+      }
+
+      const loading = document.getElementById('loading');
+      const qrContainer = document.getElementById('qrContainer');
+      const error = document.getElementById('error');
+      
+      loading.style.display = 'block';
+      qrContainer.style.display = 'none';
+      error.style.display = 'none';
+
+      try {
+        // Build URL with IP
+        const url = `http://${serverIP}:3000/table-select.html`;
+        
+        console.log('Generating QR for URL:', url);
+
+        // Clear any existing QR code
+        document.getElementById('qrcode').innerHTML = '';
+
+        // Generate QR Code
+        new QRCode(document.getElementById('qrcode'), {
+          text: url,
+          width: 450,
+          height: 450,
+          colorDark: '#000000',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Show URL
+        document.getElementById('urlDisplay').innerHTML = `
+          <strong>QR Code URL:</strong><br>
+          ${url}<br>
+          <small style="opacity: 0.7;">Customers will scan this to order</small>
+        `;
+
+        // Hide loading, show QR
+        loading.style.display = 'none';
+        qrContainer.style.display = 'block';
+
+        console.log('✅ QR code generated successfully!');
+
+      } catch (error) {
+        console.error('Error generating QR code:', error);
+        
+        loading.style.display = 'none';
+        error.style.display = 'block';
+        error.innerHTML = `
+          <strong>⚠️ Error Loading QR Code</strong><br>
+          ${error.message}<br>
+          <small>Please check your IP address and try again.</small>
+        `;
+      }
+    }
+
+    // Allow Enter key to generate QR
+    document.getElementById('serverIP').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        generateQR();
+      }
+    });
+  </script>
+
+</body>
+</html>

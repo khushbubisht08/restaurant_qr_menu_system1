@@ -1,0 +1,122 @@
+[
+  {
+    "category": "Starters",
+    "items": [
+      { "id": 1, "name": "Paneer Tikka", "price": 220, "desc": "Grilled cottage cheese with spices", "img": "https://tse1.mm.bing.net/th/id/OIP.YMUBgbQa3yM-XWiBe7fYtQHaHa?pid=Api&P=0&h=180" },
+      { "id": 2, "name": "Veg Spring Roll", "price": 150, "desc": "Crispy rolls stuffed with vegetables", "img": "https://www.tashasartisanfoods.com/blog/wp-content/uploads/2019/11/Baked-Veg-Spring-Rolls-1.jpg" }
+    ]
+  },
+  {
+    "category": "Main Course",
+    "items": [
+      { "id": 3, "name": "Butter Chicken", "price": 280, "desc": "Creamy tomato-based chicken curry", "img": "https://www.cookingclassy.com/wp-content/uploads/2021/01/butter-chicken-4.jpg" },
+      { "id": 4, "name": "Dal Makhani", "price": 180, "desc": "Rich black lentils with butter & cream", "img": "https://www.cookwithmanali.com/wp-content/uploads/2019/04/Restaurant-Style-Dal-Makhani.jpg" }
+    ]
+  },
+  {
+    "category": "Drinks",
+    "items": [
+      { "id": 5, "name": "Cold Coffee", "price": 120, "desc": "Chilled coffee with cream", "img": "https://tse3.mm.bing.net/th/id/OIP.eJlL1bD_3COtRZisaPXgqwHaLO?pid=Api&P=0&h=180" },
+      { "id": 6, "name": "Iced Lemon Tea", "price": 90, "desc": "Refreshing lemon iced tea", "img": "https://tse4.mm.bing.net/th/id/OIP.uPAagz7KoTvt7nBVah6EywHaLH?pid=Api&P=0&h=180" },
+      {
+        "id": 7, "name": "Coca Cola","price": 50,"desc": "Refreshing soft drink.","img": "https://tse4.mm.bing.net/th/id/OIP.FZBzdXkitzdhNiFQg4_whgHaFj?pid=Api&P=0&h=180"},
+      {
+        "id": 8,
+        "name": "Pepsi",
+        "price": 50,
+        "desc": "Cool and fizzy drink.",
+        "img": "https://m.media-amazon.com/images/I/61rmYnJvWzL._SL1500_.jpg"
+      },
+      {
+        "id": 9,
+        "name": "Orange Juice",
+        "price": 80,
+        "desc": "Freshly squeezed orange juice.",
+        "img": "https://tse4.mm.bing.net/th/id/OIP.Q_fVFQyxgraJLFrGLNNvxAHaFD?pid=Api&P=0&h=180"
+      },
+      {
+        "id": 10,
+        "name": "Coffee",
+        "price": 60,
+        "desc": "Hot brewed coffee.",
+        "img": "https://tse3.mm.bing.net/th/id/OIP.TODSnt3J9qXuLqQ7JIqJywHaEu?pid=Api&P=0&h=180"
+      },
+      {
+        "id": 11,
+        "name": "Tea",
+        "price": 40,
+        "desc": "Freshly brewed tea.",
+        "img": "https://tse4.mm.bing.net/th/id/OIP.QFZj1pyMT7MML0mad43xQwHaEo?pid=Api&P=0&h=180"
+      },
+      {
+        "id": 12,
+        "name": "Water Bottle",
+        "price": 30,
+        "desc": "500ml bottled water.",
+        "img": "https://i5.walmartimages.com/asr/83568193-2418-40f0-8367-4fd80481e2f8_1.fc5284020d9e9b9bcd45d777a9e62bb5.jpeg"
+      }
+    ]
+  },
+  
+  {
+    "category": "Food",
+    "items": [
+      {
+        "id": 13,
+        "name": "Margherita Pizza",
+        "price": 250,
+        "desc": "Classic pizza with mozzarella cheese and tomato sauce.",
+        "img": "https://cookieandkate.com/images/2021/07/classic-margherita-pizza.jpg"
+      },
+      {
+        "id": 14,
+        "name": "Pepperoni Pizza",
+        "price": 300,
+        "desc": "Spicy pepperoni with mozzarella cheese.",
+        "img": "https://tse2.mm.bing.net/th/id/OIP.JHWSQr8k_BHuerViHtd6jQHaHa?pid=Api&P=0&h=180"
+      },
+      {
+        "id": 15,
+        "name": "Veggie Pizza",
+        "price": 280,
+        "desc": "Loaded with fresh vegetables and cheese.",
+        "img": "https://tse2.mm.bing.net/th/id/OIP.Xx0j4C97GRtmrBzJHq8RFgHaLG?pid=Api&P=0&h=180"
+      },
+      {
+        "id": 16,
+        "name": "Cheese Burger",
+        "price": 150,
+        "desc": "Juicy burger with cheese, lettuce, and tomato.",
+        "img": "https://tse3.mm.bing.net/th/id/OIP.y5CYrhnDFf6FbzCw7pCVWgHaE8?pid=Api&P=0&h=180"
+      },
+      {
+        "id": 17,
+        "name": "Chicken Burger",
+        "price": 180,
+        "desc": "Grilled chicken patty with fresh veggies.",
+        "img": "https://tse4.mm.bing.net/th/id/OIP.m93SV6ox1swkqRaBnEzbHgHaHa?pid=Api&P=0&h=180"
+      },
+      {
+        "id": 18,
+        "name": "Veg Pasta",
+        "price": 200,
+        "desc": "Pasta with fresh vegetables and tomato sauce.",
+        "img": "https://tse2.mm.bing.net/th/id/OIP.UVByYrZOkOzwjegoXBqL4gHaLH?pid=Api&P=0&h=180"
+      },
+      {
+        "id": 19,
+        "name": "white sauce pasta",
+        "price": 220,
+        "desc": "Pasta with grilled white and creamy sauce.",
+        "img": "https://tse1.mm.bing.net/th/id/OIP.-z1jY0eq-qEsqtjsIgUO_QHaLH?pid=Api&P=0&h=180"
+      },
+      {
+        "id": 20,
+        "name": "French Fries",
+        "price": 100,
+        "desc": "Crispy golden French fries.",
+        "img": "https://tse2.mm.bing.net/th/id/OIP.UyXaDth-pAyEa6iU0BfgbwHaFj?pid=Api&P=0&h=180"
+      }
+    ]
+  }
+]

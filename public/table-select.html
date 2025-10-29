@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Your Table - Alpha Square</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .table-btn {
+      transition: all 0.3s ease;
+    }
+    .table-btn:hover {
+      transform: scale(1.05);
+    }
+    .table-btn:active {
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-orange-50 to-red-50 min-h-screen flex items-center justify-center p-4">
+  
+  <div class="max-w-2xl w-full">
+    
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <div class="text-7xl mb-4 animate-bounce">🍽️</div>
+      <h1 class="text-5xl font-bold text-gray-800 mb-2">Alpha Square</h1>
+      <p class="text-xl text-gray-600">Welcome! Select Your Table</p>
+    </div>
+
+    <!-- Table Selection Grid -->
+    <div class="bg-white rounded-3xl shadow-2xl p-8">
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
+        🪑 Which table are you sitting at?
+      </h2>
+      
+      <div class="grid grid-cols-3 gap-4 mb-6">
+        <button onclick="selectTable(1)" class="table-btn bg-gradient-to-br from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg text-2xl">
+          Table 1
+        </button>
+        <button onclick="selectTable(2)" class="table-btn bg-gradient-to-br from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg text-2xl">
+          Table 2
+        </button>
+        <button onclick="selectTable(3)" class="table-btn bg-gradient-to-br from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg text-2xl">
+          Table 3
+        </button>
+        <button onclick="selectTable(4)" class="table-btn bg-gradient-to-br from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg text-2xl">
+          Table 4
+        </button>
+        <button onclick="selectTable(5)" class="table-btn bg-gradient-to-br from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg text-2xl">
+          Table 5
+        </button>
+        <button onclick="selectTable(6)" class="table-btn bg-gradient-to-br from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg text-2xl">
+          Table 6
+        </button>
+        <button onclick="selectTable(7)" class="table-btn bg-gradient-to-br from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg text-2xl">
+          Table 7
+        </button>
+        <button onclick="selectTable(8)" class="table-btn bg-gradient-to-br from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg text-2xl">
+          Table 8
+        </button>
+        <button onclick="selectTable(9)" class="table-btn bg-gradient-to-br from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white font-bold py-6 px-4 rounded-2xl shadow-lg text-2xl">
+          Table 9
+        </button>
+      </div>
+
+      <div class="bg-blue-50 border-2 border-blue-200 rounded-xl p-4 text-center">
+        <p class="text-gray-700 text-sm">
+          <strong>💡 Tip:</strong> Make sure to select the correct table number for accurate order delivery!
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-6 text-gray-600">
+      <p class="text-sm">Powered by Alpha Square Restaurant</p>
+    </div>
+
+  </div>
+
+  <script>
+    function selectTable(tableNumber) {
+      // Add a visual feedback
+      event.target.classList.add('animate-pulse');
+      
+      // Redirect to customer menu with table number
+      setTimeout(() => {
+        window.location.href = `customer.html?table=${tableNumber}`;
+      }, 300);
+    }
+  </script>
+</body>
+</html>

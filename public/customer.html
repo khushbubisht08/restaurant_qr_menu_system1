@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QR Menu – Customer</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Alpha Square</h1>
+      <small id="tableBadge"></small>
+    </div>
+    <button id="cartBtn">🛒 Cart (<span id="cartCount">0</span>)</button>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h2>Welcome – Order from your table</h2>
+      <p>Tap items to add to cart. When ready, click <strong>Place Order</strong>.</p>
+    </section>
+
+    <section id="menu" class="menu-root" aria-live="polite"></section>
+  </main>
+
+  <!-- Cart modal -->
+  <div id="cartModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h3>Your Cart</h3>
+        <button id="closeCart">✕</button>
+      </header>
+      <div id="cartItems" class="cart-items"></div>
+      <footer class="modal-footer">
+        <div class="total">Total: ₹<span id="cartTotal">0.00</span></div>
+        <div class="actions">
+          <button id="clearCart">Clear</button>
+          <button id="placeOrder">Place Order</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Order Tracking Modal -->
+  <div id="trackModal" class="modal hidden">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h3>🎉 Order Placed!</h3>
+        <button id="closeTrack">✕</button>
+      </header>
+      <div id="trackContent" class="p-6"></div>
+      <footer class="modal-footer">
+        <button id="orderMore" class="bg-orange-500 text-white px-6 py-2 rounded-lg">Order More</button>
+        <button id="exitBtn" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg">Exit</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  
+  <!-- Order Status Checker -->
+  <script>
+    let currentOrderId = null;
+    let statusCheckInterval = null;
+
+    // Check order status every 5 seconds
+    function startStatusCheck(orderId) {
+      currentOrderId = orderId;
+      if (statusCheckInterval) clearInterval(statusCheckInterval);
+      
+      statusCheckInterval = setInterval(async () => {
+        try {
+          const res = await fetch('/admin/orders');
+          const orders = await res.json();
+          const myOrder = orders.find(o => o.id === orderId);
+          
+          if (myOrder) {
+            updateOrderStatus(myOrder);
+          }
+        } catch (e) {
+          console.error('Error checking status:', e);
+        }
+      }, 5000);
+    }
+
+    function updateOrderStatus(order) {
+      const statusEl = document.getElementById('orderStatus');
+      if (!statusEl) return;
+
+      let statusHTML = '';
+      let statusClass = '';
+      let icon = '';
+
+      if (order.status === 'Pending') {
+        statusClass = 'bg-orange-100 text-orange-600';
+        icon = '⏳';
+        statusHTML = 'Your order is being reviewed...';
+      } else if (order.status === 'Preparing') {
+        statusClass = 'bg-blue-100 text-blue-600';
+        icon = '👨‍🍳';
+        statusHTML = 'Your food is being prepared!';
+        showNotification('🔥 Your order is now being prepared!');
+      } else if (order.status === 'Completed') {
+        statusClass = 'bg-green-100 text-green-600';
+        icon = '✅';
+        statusHTML = 'Your order is ready! Enjoy your meal!';
+        showNotification('✅ Your order is ready!');
+        clearInterval(statusCheckInterval);
+      }
+
+      statusEl.className = `text-center p-6 rounded-xl ${statusClass}`;
+      statusEl.innerHTML = `
+        <div class="text-4xl mb-2">${icon}</div>
+        <div class="text-2xl font-bold mb-2">${order.status}</div>
+        <p class="text-sm">${statusHTML}</p>
+      `;
+    }
+
+    function showNotification(message) {
+      if (Notification.permission === 'granted') {
+        new Notification('Alpha Square', { body: message });
+      }
+      
+      // Visual notification
+      const notif = document.createElement('div');
+      notif.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-xl z-50 animate-bounce';
+      notif.textContent = message;
+      document.body.appendChild(notif);
+      setTimeout(() => notif.remove(), 5000);
+    }
+
+    // Request notification permission
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+
+    document.getElementById('orderMore')?.addEventListener('click', () => {
+      document.getElementById('trackModal').classList.add('hidden');
+      currentOrderId = null;
+      if (statusCheckInterval) clearInterval(statusCheckInterval);
+    });
+
+    document.getElementById('exitBtn')?.addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    document.getElementById('closeTrack')?.addEventListener('click', () => {
+      document.getElementById('trackModal').classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
